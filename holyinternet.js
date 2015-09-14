@@ -16,8 +16,8 @@ app.get('/pray.to.me', function(req, res){
   	{
   		res.send('');
   	}
-  	var log_string = req.ip + ' ' + primetext;
-	fs.writeFile("./log", log_string, function(err) {
+  	var log_string = req.ip + ' ' + primetext + '\n';
+	fs.appendFile("./log", log_string, function(err) {
 	    if(err) {
 	        return console.log(err);
 	    }
@@ -25,6 +25,8 @@ app.get('/pray.to.me', function(req, res){
 
 
    	exec("th sample.lua cv/model.t7 -gpuid -1 -primetext '" + primetext + "'", function(error, stdout, stderr){
+		console.log(error);
+		console.log(stderr);
 		console.log(stdout);
 		var index = stdout.indexOf(marker);
 		//console.log(index);
@@ -34,9 +36,9 @@ app.get('/pray.to.me', function(req, res){
 			stdout = stdout.substring(index + marker.length + 5);
 		}
 		stdout = stdout.replace(/(\w* \d*:\d*)/g, '\n\n');
-		stdout = stdout.replace('¶', '');
-		stdout = stdout.replace('[', '');
-		stdout = stdout.replace(']', '');
+		stdout = stdout.replace(/¶/g, '');
+		stdout = stdout.replace(/\[/g, '');
+		stdout = stdout.replace(/\]/g, '');
 		stdout = stdout.substring(0,stdout.lastIndexOf('.') + 1);
 		//stdout = encodeURIComponent(stdout);
 		console.log(stdout);
@@ -45,5 +47,5 @@ app.get('/pray.to.me', function(req, res){
 
 });
 
-app.listen(3000);
+app.listen(8080);
 
