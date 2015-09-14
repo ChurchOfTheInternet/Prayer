@@ -34,13 +34,13 @@
 	});
 
     $('#prayButton').click(function() {
-    	$("#fader").fadeOut(3000);
         console.log('praying');
         var prayer = $('#prayer').val();
         console.log(prayer);
         if (prayer == undefined || prayer.length == 0) {
             $('#scripture').html('Please enter a prayer');
         } else {
+        	$("#fader").fadeOut(3000);
             $.ajax({
                 url: "pray.to.me?prayer=" + prayer,
                 success: function(result) {
