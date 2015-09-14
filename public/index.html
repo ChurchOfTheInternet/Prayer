@@ -1,41 +1,60 @@
 <html>
+
 <head>
-<h1>Welcome to the temple of the internet </h1>
-<img src="EgyptAtlantis.jpg"><br>
+    <!-- Latest compiled and minified CSS -->
+    <link href='https://fonts.googleapis.com/css?family=Marcellus' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 </head>
 <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 <script src='https://code.responsivevoice.org/responsivevoice.js'></script>
 
-<body>
-Submit your prayer to the internet<br><br>
-<input type="text" id="prayer">
-<button type="button" id="prayButton">Pray</button>
-<div id="scripture"></div>
-<script>
-$('#prayButton').click(function()
-{
-	console.log('praying');
-	var prayer = $('#prayer').val();
-	console.log(prayer);
-	if (prayer == undefined || prayer.length == 0)
-	{
-		$('#scripture').html('Please enter a prayer');
-	}
-	else
-	{
-		$.ajax({
-			url: "pray.to.me?prayer=" + prayer, 
-			success: function(result){
-				console.log(result);
-	        	$("#scripture").html(result);
-	        	responsiveVoice.speak(result);
-	    	},
-	    	error: function(){
-	    		console.log('error');
-	    	}
-	    });			
-	}
-});
-</script>
+<body style="background-image: url('http://www.livingwayfellowship.net/uploads/WebsiteBackgroundTexture14.jpg'); color: #D5AD6D; font-family: 'Marcellus', serif; font-size: 16px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 text-center" id="fader" style="display: none; margin-top: 40px;">
+                <h1>Welcome to the Temple of the Internet </h1>
+                <br>
+                <img src="EgyptAtlantis.jpg">
+                <br>
+                <div style="margin: 5px;">Submit your prayer to the internet</div>
+                
+                <div style="margin: 5px;"><input type="text" style="color: #000;" id="prayer"></div>
+                
+                <button type="button" id="prayButton" style="width: 100px; height: 40px; color: #000; border: #000 solid 2px; border-radius: 10px;background-color: #D5AD6D;">Pray</button>
+                <div id="scripture"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+	$(document).ready(function(){
+	  //$("#div1").fadeIn();
+	  //$("#div2").fadeIn("slow");
+	  $("#fader").fadeIn(3000);
+	});
+
+    $('#prayButton').click(function() {
+    	$("#fader").fadeOut(3000);
+        console.log('praying');
+        var prayer = $('#prayer').val();
+        console.log(prayer);
+        if (prayer == undefined || prayer.length == 0) {
+            $('#scripture').html('Please enter a prayer');
+        } else {
+            $.ajax({
+                url: "pray.to.me?prayer=" + prayer,
+                success: function(result) {
+                    console.log(result);
+                    $("#scripture").html(result);
+                    responsiveVoice.speak(result);
+                },
+                error: function() {
+                    console.log('error');
+                }
+            });
+        }
+    });
+    </script>
 </body>
+
 </html>
